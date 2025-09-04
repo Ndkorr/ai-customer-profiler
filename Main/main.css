@@ -1,0 +1,145 @@
+.d365-root {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f5f6fa;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.d365-header {
+  background: #22336c;
+  color: #fff;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.d365-logo {
+  font-weight: bold;
+  margin-right: 16px;
+}
+.d365-title {
+  flex: 1;
+}
+.d365-header-actions .d365-user {
+  background: #3a4d9a;
+  border-radius: 50%;
+  padding: 8px 12px;
+  font-weight: bold;
+}
+.d365-main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.d365-comm-panel {
+  width: 320px;
+  background: #fff;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+.d365-comm-header {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.d365-end-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.d365-chat {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+}
+.d365-chat-msg {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 6px;
+}
+.d365-chat-msg.agent {
+  background: #f0f4ff;
+}
+.d365-chat-msg.customer {
+  background: #e8f5e9;
+}
+.d365-chat-input {
+  display: flex;
+  border-top: 1px solid #e0e0e0;
+  padding: 8px;
+  background: #fafbfc;
+}
+.d365-chat-input input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.d365-chat-input button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  border: none;
+  background: #22336c;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.d365-case-panel {
+  flex: 2;
+  background: #fff;
+  padding: 24px;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+.d365-case-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.d365-case-status {
+  background: #e0e7ff;
+  color: #22336c;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.d365-case-owner {
+  margin-left: auto;
+  color: #888;
+}
+.d365-case-summary {
+  display: flex;
+  gap: 32px;
+}
+.d365-copilot-panel {
+  width: 340px;
+  background: #f8fafd;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #e0e0e0;
+  padding: 16px;
+}
+.d365-copilot-header {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.d365-copilot-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px #0001;
+}
+.d365-copilot-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

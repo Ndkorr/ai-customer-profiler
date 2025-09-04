@@ -1,5 +1,4 @@
 import React from "react";
-import "./MainDashboard.css";
 
 export default function MainDashboard() {
   return (

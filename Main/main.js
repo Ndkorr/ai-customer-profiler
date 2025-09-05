@@ -5,7 +5,7 @@ export default function MainDashboard() {
     <div className="d365-root">
       {/* Top Bar */}
       <header className="d365-header">
-        <span className="d365-logo">Dynamics 365</span>
+        <span className="d365-logo">Dynamics</span>
         <span className="d365-title">Omnichannel for Customer Service</span>
         <div className="d365-header-actions">
           <span className="d365-user">ML</span>

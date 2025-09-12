@@ -177,6 +177,8 @@ export default function MainDashboard() {
           <HomeDashboard
             workItems={workItems}
             setWorkItems={setWorkItems}
+            showCopilot={showCopilot}
+            setShowCopilot={setShowCopilot}
           />
         ) : (
           <div className="d365-panels">
@@ -202,8 +204,8 @@ export default function MainDashboard() {
 }
 
 
-function HomeDashboard({ workItems, setWorkItems }) {
-  
+function HomeDashboard({ workItems, setWorkItems, showCopilot, setShowCopilot }) {
+
 
   return (
     <div className="d365-dashboard">
@@ -231,72 +233,82 @@ function HomeDashboard({ workItems, setWorkItems }) {
         </div>
       </header>
 
-      <div className="d365-dashboard-content">
-        <section className="d365-work-items">
-          <div className="d365-work-header">
-            <h3 className="d365-work-title">
-              My work items
-            </h3>
-            <span className="d365-work-count">{workItems.my.length}</span>
-          </div>
-          <div className="d365-work-list">
-            {workItems.my.map(item => (
-              <div key={item.id} className="d365-work-item">
-                <span className="d365-work-icon">{item.icon}</span>
-                <div className="d365-work-details">
-                  <div className="d365-work-name">{item.title}</div>
-                  <div className="d365-work-meta">
-                    {item.customer} • {item.time}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
-        <section className="d365-work-items">
-          <div className="d365-work-header">
-            <h3 className="d365-work-title">
-              Open work items
-            </h3>
-            <span className="d365-work-count">0</span>
-          </div>
-          <div className="d365-work-list">
-            {workItems.open.map(item => (
-              <div key={item.id} className="d365-work-item">
-                <span className="d365-work-icon">{item.icon}</span>
-                <div className="d365-work-details">
-                  <div className="d365-work-name">{item.title}</div>
-                  <div className="d365-work-meta">
-                    {item.customer} • {item.time}
+      <div className="d365-panels">
+        <div className="d365-dashboard-content">
+          <section className="d365-work-items">
+            <div className="d365-work-header">
+              <h3 className="d365-work-title">
+                My work items
+              </h3>
+              <span className="d365-work-count">{workItems.my.length}</span>
+            </div>
+            <div className="d365-work-list">
+              {workItems.my.map(item => (
+                <div key={item.id} className="d365-work-item">
+                  <span className="d365-work-icon">{item.icon}</span>
+                  <div className="d365-work-details">
+                    <div className="d365-work-name">{item.title}</div>
+                    <div className="d365-work-meta">
+                      {item.customer} • {item.time}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        <section className="d365-work-items">
-          <div className="d365-work-header">
-            <h3 className="d365-work-title">
-              Closed work items
-            </h3>
-            <span className="d365-work-count">{workItems.closed.length}</span>
-          </div>
-          <div className="d365-work-list">
-            {workItems.closed.map(item => (
-              <div key={item.id} className="d365-work-item">
-                <span className="d365-work-icon">{item.icon}</span>
-                <div className="d365-work-details">
-                  <div className="d365-work-name">{item.title}</div>
-                  <div className="d365-work-meta">
-                    {item.customer} • {item.time}
+          <section className="d365-work-items">
+            <div className="d365-work-header">
+              <h3 className="d365-work-title">
+                Open work items
+              </h3>
+              <span className="d365-work-count">0</span>
+            </div>
+            <div className="d365-work-list">
+              {workItems.open.map(item => (
+                <div key={item.id} className="d365-work-item">
+                  <span className="d365-work-icon">{item.icon}</span>
+                  <div className="d365-work-details">
+                    <div className="d365-work-name">{item.title}</div>
+                    <div className="d365-work-meta">
+                      {item.customer} • {item.time}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+
+          <section className="d365-work-items">
+            <div className="d365-work-header">
+              <h3 className="d365-work-title">
+                Closed work items
+              </h3>
+              <span className="d365-work-count">{workItems.closed.length}</span>
+            </div>
+            <div className="d365-work-list">
+              {workItems.closed.map(item => (
+                <div key={item.id} className="d365-work-item">
+                  <span className="d365-work-icon">{item.icon}</span>
+                  <div className="d365-work-details">
+                    <div className="d365-work-name">{item.title}</div>
+                    <div className="d365-work-meta">
+                      {item.customer} • {item.time}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+        <div className="d365-copilot-container">
+          <CopilotControl 
+            showCopilot={showCopilot}
+            onToggle={() => setShowCopilot(!showCopilot)}
+          />
+          {showCopilot && <CopilotPanel onClose={() => setShowCopilot(false)} />}
+        </div>
       </div>
     </div>
   );
@@ -384,78 +396,140 @@ export function CommPanel({messages, setMessages, minutes, seconds }) {
 }
 
 export function CasePanel({ showCopilot }) {
+  const [activeTab, setActiveTab] = useState('summary');
+
+  const handleCreateCase = () => {
+    setActiveTab('new');
+  };
+
+  const renderSummaryContent = () => (
+    <div className="d365-case-content">
+      <div className="summary-layout">
+        <div className="details-section">
+          <h2 className="details-title">Details</h2>
+          <div className="summary-details">
+            <div className="meta-item">
+              <label>First Name</label>
+              <input type="text" className="d365-input" />
+            </div>
+            <div className="meta-item">
+              <label>Last Name</label>
+              <input type="text" className="d365-input" />
+            </div>
+            <div className="meta-item">
+              <label>Email Address</label>
+              <input type="email" className="d365-input" />
+            </div>
+            <div className="meta-item">
+              <label>Country</label>
+              <input type="text" className="d365-input" />
+            </div>
+            <div className="meta-item">
+              <label>Concern</label>
+              <textarea className="d365-input" rows={3} />
+            </div>
+          </div>
+        </div>
+        
+        <div className="action-section">
+          <div className="create-case-wrapper">
+            <span className="wrench-icon">🔧</span>
+            <button 
+              className="create-case-btn"
+              onClick={handleCreateCase}
+            >
+              + Create new case
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <main className={`d365-case-panel ${!showCopilot ? 'expanded' : ''}`}>
       <div className="d365-case-nav">
-        <div className="nav-item active">
+        <div
+            className={`nav-item${activeTab === 'summary' ? ' active' : ''}`}
+            onClick={() => setActiveTab('summary')}
+        >
           <span className="nav-icon">📄</span>
           Customer Summary
         </div>
-        <div className="nav-item">
+        <div
+          className={`nav-item${activeTab === 'new' ? ' active' : ''}`}
+          onClick={() => setActiveTab('new')}
+        >
           <span className="nav-icon">➕</span>
           New Case
           <span className="nav-close">×</span>
         </div>
       </div>
 
-      <div className="d365-case-actions">
-        <div className="action-group">
-          <button className="action-btn">
-            <span className="action-icon">💾</span>
-            Save
-          </button>
-          <button className="action-btn">
-            <span className="action-icon">📁</span>
-            Save & Close
-          </button>
-          <button className="action-btn">
-            <span className="action-icon">🔄</span>
-            Save & Route
-          </button>
-        </div>
-        <div className="action-group">
-          <button className="action-btn">
-            <span className="action-icon">➕</span>
-            New
-          </button>
-          <button className="action-btn">
-            <span className="action-icon">📋</span>
-            Case to KB
-          </button>
-          <button className="action-btn">
-            <span className="action-icon">⋮</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="d365-case-header">
-        <div className="case-title">New Case - Unsaved</div>
-        <div className="case-meta">
-          <div className="meta-item">
-            <label>Case</label>
-            <span>Global case creation</span>
-          </div>
-          <div className="meta-item">
-            <label>Status</label>
-            <span className="status-badge">Open</span>
-          </div>
-          <div className="meta-item">
-            <label>Owner</label>
-            <div className="owner-info">
-              <span className="owner-avatar">MA</span>
-              <span>Mathew Astorga</span>
+      {activeTab === 'summary' ? (
+        renderSummaryContent()
+      ) : (
+        <>
+          <div className="d365-case-actions">
+            <div className="action-group">
+              <button className="action-btn">
+                <span className="action-icon">💾</span>
+                Save
+              </button>
+              <button className="action-btn">
+                <span className="action-icon">📁</span>
+                Save & Close
+              </button>
+              <button className="action-btn">
+                <span className="action-icon">🔄</span>
+                Save & Route
+              </button>
+            </div>
+            <div className="action-group">
+              <button className="action-btn">
+                <span className="action-icon">➕</span>
+                New
+              </button>
+              <button className="action-btn">
+                <span className="action-icon">📋</span>
+                Case to KB
+              </button>
+              <button className="action-btn">
+                <span className="action-icon">⋮</span>
+              </button>
             </div>
           </div>
-          <div className="meta-item">
-            <label>Created On</label>
-            <span>...</span>
+
+          <div className="d365-case-header">
+            <div className="case-title">New Case - Unsaved</div>
+            <div className="case-meta">
+              <div className="meta-item">
+                <label>Case</label>
+                <span>Global case creation</span>
+              </div>
+              <div className="meta-item">
+                <label>Status</label>
+                <span className="status-badge">Open</span>
+              </div>
+              <div className="meta-item">
+                <label>Owner</label>
+                <div className="owner-info">
+                  <span className="owner-avatar">MA</span>
+                  <span>Mathew Astorga</span>
+                </div>
+              </div>
+              <div className="meta-item">
+                <label>Created On</label>
+                <span>...</span>
+              </div>
+              <div className="meta-item">
+                <label>Priority</label>
+                <span>...</span>
+              </div>
+            </div>
           </div>
-          <div className="meta-item">
-            <label>Priority</label>
-            <span>...</span>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
 
       {/* Rest of the case content */}
       <div className="d365-case-content">

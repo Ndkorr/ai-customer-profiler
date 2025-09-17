@@ -173,6 +173,8 @@ export default function MainDashboard() {
             </button>
           )}
         </div>
+
+        
         {activeTab === "Home" ? (
           <HomeDashboard
             workItems={workItems}
@@ -206,36 +208,35 @@ export default function MainDashboard() {
 
 function HomeDashboard({ workItems, setWorkItems, showCopilot, setShowCopilot }) {
 
-
+  
   return (
     <div className="d365-dashboard">
-      <header className="d365-dashboard-header">
-        <div className="d365-dashboard-title">
-          <span>Omnichannel Representative Dashboard</span>
-          <button className="d365-dashboard-button">▼</button>
-        </div>
-        <div className="d365-dashboard-actions">
-          <button className="d365-dashboard-button">
-            <span>Save As</span>
-          </button>
-          <button className="d365-dashboard-button">
-            <span>+ New</span>
-          </button>
-          <button className="d365-dashboard-button">
-            <span>✓ Set As Default</span>
-          </button>
-          <button className="d365-dashboard-button">
-            <span>↻ Refresh All</span>
-          </button>
-          <button className="d365-dashboard-button">
-            <span>Share</span>
-          </button>
-        </div>
-      </header>
-
-
       <div className="d365-panels">
         <div className="d365-dashboard-content">
+          <header className="d365-dashboard-header">
+            <div className="d365-dashboard-title">
+              <span>Omnichannel Representative Dashboard</span>
+              <button className="d365-dashboard-button">▼</button>
+            </div>
+            <div className="d365-dashboard-actions">
+              <button className="d365-dashboard-button">
+                <span>Save As</span>
+              </button>
+              <button className="d365-dashboard-button">
+                <span>+ New</span>
+              </button>
+              <button className="d365-dashboard-button">
+                <span>✓ Set As Default</span>
+              </button>
+              <button className="d365-dashboard-button">
+                <span>↻ Refresh All</span>
+              </button>
+              <button className="d365-dashboard-button">
+                <span>Share</span>
+              </button>
+            </div>
+          </header>
+
           <section className="d365-work-items">
             <div className="d365-work-header">
               <h3 className="d365-work-title">
@@ -302,6 +303,8 @@ function HomeDashboard({ workItems, setWorkItems, showCopilot, setShowCopilot })
             </div>
           </section>
         </div>
+
+        <div className="d365-dashboard-copilot-divider"></div>
         <div className="d365-copilot-container">
           <CopilotControl 
             showCopilot={showCopilot}

@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 768px;
 }
 
 :root {
@@ -202,6 +203,7 @@
   position: relative;
   padding-right: 40px;
   min-height: 0;
+  min-width: 0;
 }
 
 .d365-divider-vertical {
@@ -236,18 +238,22 @@
   border-right: none;
   padding: 16px;
   min-width: 400px;
-  overflow-y: auto;
+  overflow-y: hidden;
   box-shadow: 0 1px 4px #0001;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   margin-top: 0;
 }
 
+
 .summary-layout {
   display: flex;
   gap: 2rem;
-  padding: 1.5rem;
-  height: 100%;
+  padding: 2.5rem;
+  height: calc(100vh - 200px); /* Adjust height to account for header and tabs */
+  overflow-y: auto; /* Add scrolling to the entire layout */
+  margin-right: 40px; /* Account for the copilot control */
+  
 }
 
 .details-section {
@@ -257,6 +263,8 @@
   padding: 1.5rem;
   border: 1px solid #e0e0e0;
   box-shadow: #333 0px 1px 2px 0px;
+  height: fit-content; /* Allow content to determine height */
+  min-height: 80%;
   
 }
 
@@ -267,29 +275,165 @@
   color: #323130;
 }
 
+
+/* Summary Tab Layout */
+.summary-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 1rem;
+  gap: 2rem;
+  padding: 1.5rem;
+  height: calc(100vh - 430px);
+  overflow-y: auto;
+  margin-right: 40px;
+  position: relative;
+}
+
+.summary-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.summary-section {
+  background: #fff;
+  border-radius: 6px;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  box-shadow: #333 0px 1px 2px 0px;
+  height: fit-content;
+  min-height: auto;
+  overflow-y: visible;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.summary-section-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: #323130;
+}
+
+.summary-section-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: visible;
+  position: relative;
+}
+
+.summary-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #323130;
+}
+
+.summary-field input,
+.summary-field select,
+.summary-field textarea {
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+.summary-field input:focus,
+.summary-field select:focus,
+.summary-field textarea:focus {
+  border-color: #0078d4;
+  outline: none;
+}
+
+@media screen and (min-width: 768px) and (max-zoom: 150%) {
+  .summary-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 767px), (min-zoom: 150%) {
+  .summary-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .summary-section {
+    min-height: auto;
+  }
+}
+
+
+
+
 .action-section {
   width: 300px;
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: center;
   padding: 1.5rem;
   background: #fff;
   border-radius: 6px;
   border: 1px solid #e0e0e0;
   box-shadow: #333 0px 1px 2px 0px;
-  height: 50%
+  height: 50%;
+  min-width: 250px;
+  max-width: 400px;
+  overflow: auto;
+  position: relative;
+}
+
+.action-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: #323130;
+}
+
+.search-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.search-btn {
+  padding: 6px 12px;
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .create-case-wrapper {
   text-align: center;
-  margin-top: 6rem;
+  margin-top: 2rem;
   
 }
 
+.source-record-status {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .wrench-icon {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   display: block;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
@@ -545,14 +689,21 @@
   flex: 1;
   background: #fff;
   min-width: 0;
+  max-height: calc(100vh - 48px);
+  height: 100%;
 }
 
 .d365-case-nav {
   display: flex;
-  padding: 2 8px;
+  padding: 2px 8px;
   border-radius: 6px;
   border: 1px solid #e0e0e0;
   box-shadow: #333 0px 1px 2px 0px;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  margin-bottom: 1rem;
 }
 
 .nav-item {
@@ -573,6 +724,32 @@
 .nav-close {
   margin-left: 8px;
   color: #666;
+}
+
+.d365-case-subnav {
+  display: flex;
+  margin-top: 16px;
+  margin-bottom: -1rem;
+}
+
+.d365-case-subnav .nav-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  position: relative;
+}
+
+.d365-case-subnav .nav-item.active {
+  font-weight: 500;
+}
+
+.d365-case-subnav .nav-item.active:after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #0078d4;
 }
 
 .d365-case-actions {
@@ -659,6 +836,8 @@
 .d365-case-panel {
   flex: 1;
   transition: flex 0.3s ease;
+  height: 100%;
+  position: relative;
 }
 
 .d365-case-panel.expanded {
@@ -895,7 +1074,7 @@
 }
 
 .d365-dashboard .d365-copilot-panel {
-  width: 400px;
+  width: 370px;
   background: #fafbfc;
   border-left: none;
   margin-top: 0;

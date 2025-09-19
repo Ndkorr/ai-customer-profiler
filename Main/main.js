@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 export default function MainDashboard() {
-  const [activeTab, setActiveTab] = useState("Louis"); // or "Home"
+  const [activeTab, setActiveTab] = useState("Home");
 
   const [showCopilot, setShowCopilot] = useState(true);
 
@@ -400,42 +400,217 @@ export function CommPanel({messages, setMessages, minutes, seconds }) {
 
 export function CasePanel({ showCopilot }) {
   const [activeTab, setActiveTab] = useState('summary');
+  const [selectedView, setSelectedView] = useState('summary');
 
   const handleCreateCase = () => {
     setActiveTab('new');
   };
+  
+
+  const renderNewCaseContent = () => (
+    <div className="summary-container">
+      {/* Left Column */}
+      <div className="summary-column">
+        <div className="summary-section">
+          <h2 className="summary-section-title">Case Information</h2>
+          <div className="summary-section-content">
+            <div className="summary-field">
+              <label>Case Number</label>
+              <input type="text" className="d365-input" value="CAS-2025-001" readOnly />
+            </div>
+            <div className="summary-field">
+              <label>Case Title</label>
+              <input type="text" className="d365-input" />
+            </div>
+            <div className="summary-field">
+              <label>Description</label>
+              <textarea className="d365-input" rows="4"></textarea>
+            </div>
+            <div className="summary-field">
+              <label>Priority</label>
+              <select className="d365-input">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="summary-section">
+          <h2 className="summary-section-title">Case Information</h2>
+          <div className="summary-section-content">
+            <div className="summary-field">
+              <label>Case Origin</label>
+              <select className="d365-input">
+                <option>Chat</option>
+                <option>Email</option>
+                <option>Phone</option>
+                <option>Web</option>
+              </select>
+            </div>
+            <div className="summary-field">
+              <label>Sub Status</label>
+              <select className="d365-input">
+                <option>Open</option>
+                <option>Closed</option>
+              </select>
+            </div>
+            <div className="summary-field">
+              <label>Sub Status</label>
+              <select className="d365-input">
+                <option>Open</option>
+                <option>In Progress</option>
+                <option>Pending</option>
+                <option>Resolved</option>
+                <option>Closed</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Right Column */}
+      <div className="summary-column">
+        <div className="summary-section">
+          <h2 className="summary-section-title">Customer Details</h2>
+          <div className="summary-section-content">
+            <div className="summary-field">
+              <label>First Name</label>
+              <input type="text" className="d365-input" placeholder="Enter first name" />
+            </div>
+            <div className="summary-field">
+              <label>Last Name</label>
+              <input type="text" className="d365-input" placeholder="Enter last name" />
+            </div>
+            <div className="summary-field">
+              <label>Phone Number</label>
+              <input type="tel" className="d365-input" placeholder="Enter phone number" />
+            </div>
+            <div className="summary-field">
+              <label>Email Address</label>
+              <input type="email" className="d365-input" placeholder="Enter email address" />
+            </div>
+            <div className="summary-field">
+              <label>Country</label>
+              <select className="d365-input">
+                <option>United States</option>
+                <option>Canada</option>
+                <option>United Kingdom</option>
+                <option>Australia</option>
+              </select>
+            </div>
+            <div className="summary-field">
+              <label>Product SN</label>
+              <input type="text" className="d365-input" placeholder="Enter serial number" />
+            </div>
+            <div className="summary-field">
+              <label>License Type</label>
+              <select className="d365-input">
+                <option>Premium</option>
+                <option>Standard</option>
+                <option>Basic</option>
+                <option>Trial</option>
+              </select>
+            </div>
+            <div className="summary-field">
+              <label>Customer Type</label>
+              <select className="d365-input">
+                <option>Existing</option>
+                <option>New</option>
+                <option>Potential</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="summary-section">
+          <h2 className="summary-section-title">Additional Information</h2>
+          <div className="summary-section-content">
+            <div className="summary-field">
+              <label>Product Information</label>
+              <select className="d365-input">
+                <option>MAXIMUM SECURITY</option>
+                <option>ANTIVIRUS+</option>
+                <option>INTERNET SECURITY</option>
+              </select>
+            </div>
+            <div className="summary-field">
+              <label>Product Version</label>
+              <select className="d365-input">
+                <option>17.9</option>
+                <option>17.8</option>
+                <option>17.7</option>
+                <option>17.6</option>
+              </select>
+            </div>
+            <div className="summary-field">
+              <label>Problem Category</label>
+              <select className="d365-input">
+                <option>Installation</option>
+                <option>Activation</option>
+                <option>Performance</option>
+                <option>Updates</option>
+              </select>
+            </div>
+            <div className="summary-field">
+              <label>Subcategory</label>
+              <select className="d365-input">
+                <option>Error Message</option>
+                <option>System Crash</option>
+                <option>Feature Not Working</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
 
   const renderSummaryContent = () => (
     <div className="d365-case-content">
       <div className="summary-layout">
         <div className="details-section">
-          <h2 className="details-title">Details</h2>
+          <h2 className="details-title">Conversation Details</h2>
           <div className="summary-details">
             <div className="meta-item">
               <label>First Name</label>
-              <input type="text" className="d365-input" />
+              <label className="d365-input"> Louis </label>
             </div>
             <div className="meta-item">
               <label>Last Name</label>
-              <input type="text" className="d365-input" />
+              <label className="d365-input"> Smith </label>
             </div>
             <div className="meta-item">
               <label>Email Address</label>
-              <input type="email" className="d365-input" />
+              <label className="d365-input"> example@example.com </label>
             </div>
             <div className="meta-item">
               <label>Country</label>
-              <input type="text" className="d365-input" />
+              <label className="d365-input"> USA </label>
             </div>
             <div className="meta-item">
               <label>Concern</label>
-              <textarea className="d365-input" rows={3} />
+              <label className="d365-input"> Can't Open Antivirus </label>
             </div>
           </div>
         </div>
         
         <div className="action-section">
+          <h2 className="action-title">Case Details</h2>
+          <div className="search-container">
+            <input 
+              type="text" 
+              placeholder="Search issue..." 
+              className="search-input"
+            />
+            <button className="search-btn">🔍</button>
+          </div>
           <div className="create-case-wrapper">
+            <span className="source-record-status">Source record not selected</span>
             <span className="wrench-icon">🔧</span>
             <button 
               className="create-case-btn"
@@ -530,13 +705,33 @@ export function CasePanel({ showCopilot }) {
                 <span>...</span>
               </div>
             </div>
-          </div>
+            <div className="d365-case-subnav">
+              <div
+                className={`nav-item${selectedView === 'summary' ? ' active' : ''}`}
+                
+              >
+                Summary
+              </div>
+              <div
+                className={`nav-item${selectedView === 'additional' ? ' active' : ''}`}
+                onClick={() => setActiveTab('additional')}
+              >
+                Additional Information
+              </div>
+              <div
+                className={`nav-item${selectedView === 'entitlement' ? ' active' : ''}`}
+                onClick={() => setActiveTab('entitlement')}
+              >
+                Entitlement
+              </div>
+            </div>
+          </div>  
         </>
       )}
 
       {/* Rest of the case content */}
       <div className="d365-case-content">
-        {/* ...existing case content... */}
+        {selectedView === 'summary' && renderNewCaseContent()}
       </div>
     </main>
   );

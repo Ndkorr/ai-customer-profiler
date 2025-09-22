@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
+import './main.css';
+import Login from './Login';
+import './Login.css';
+import Loading from './assets/Loading';
+
 
 export default function MainDashboard() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const [activeTab, setActiveTab] = useState("Home");
 
   const [showCopilot, setShowCopilot] = useState(true);
@@ -43,6 +52,8 @@ export default function MainDashboard() {
     ]
   });
 
+  
+
   // Lift conversation state up
   const [messages, setMessages] = useState([
     {
@@ -81,8 +92,6 @@ export default function MainDashboard() {
   }, []);
 
   
-
-
   // Add function to handle tab close
   const handleTabClose = () => {
     // Find Louis in work items and move to closed
@@ -111,6 +120,48 @@ export default function MainDashboard() {
     });
     setActiveTab("Home");
   };
+
+
+  useEffect(() => {
+    // Check if user was previously authenticated (e.g. from localStorage)
+    const checkAuth = async () => {
+      try {
+        // Simulate checking authentication
+        const wasAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        if (wasAuthenticated) {
+          setIsAuthenticated(true);
+        }
+      } finally {
+        // Set loading to false after auth check completes
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  //Handle login
+  const handleLogin = (credentials) => {
+    setIsLoading(true); // Show loading during login
+    
+    // Simulate login API call
+    setTimeout(() => {
+      setIsAuthenticated(true);
+      localStorage.setItem('isAuthenticated', 'true');
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   return (
     <div className="d365-root">

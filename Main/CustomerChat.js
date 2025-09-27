@@ -17,7 +17,7 @@ export default function CustomerChat() {
     // Simulate initial loading
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // Show loading for 2 seconds
+    }, 4000); // Show loading for 2 seconds
 
     return () => clearTimeout(timer);
   }, []);

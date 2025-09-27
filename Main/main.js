@@ -135,7 +135,7 @@ export default function MainDashboard() {
         // Set loading to false after auth check completes
         setTimeout(() => {
           setIsLoading(false);
-        }, 2000);
+        }, 6000);
       }
     };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authenticateUser } from './services/authService';
 import './Login.css';
 import Loading from './assets/Loading';
 
@@ -11,20 +12,34 @@ function Login({ onLogin }) {
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEmailStep) {
       setIsEmailStep(false);
       return;
     }
+    
     if (email && password) {
-      // Check if the email contains 'support' or 'chat' to redirect to CustomerChat
-      if (email.toLowerCase().includes('support') || email.toLowerCase().includes('chat')) {
-        navigate('/customer-chat');
-      } else {
-        navigate('/main');  // Default navigation to main
+      try {
+        setIsLoading(true);
+        const { success, user } = await authenticateUser(email, password);
+        
+        if (success) {
+          if (user.accountType && user.accountType.toLowerCase() === 'engineer') {
+            navigate('/main');
+          } else {
+            navigate('/customer-chat');
+          }
+          onLogin({ ...user });
+        } else {
+          alert('Invalid credentials');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('An error occurred during login');
+      } finally {
+        setIsLoading(false);
       }
-      onLogin({ email, password });
     }
   };
 
